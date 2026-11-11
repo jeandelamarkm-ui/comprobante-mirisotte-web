@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comprobante de venta - MIRISOTTE</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Llena y guarda tu comprobante de venta.">
+<meta property="og:title" content="Comprobante de venta - MIRISOTTE">
+<meta property="og:description" content="Llena y guarda tu comprobante de venta.">
+<meta property="og:image" content="https://jeandelamarkm-ui.github.io/comprobante-mirisotte-web/assets/compartir.png">
+<link rel="canonical" href="https://jeandelamarkm-ui.github.io/comprobante-mirisotte-web/">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,300;1,300&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--leche:#FAF7F2;--blush:#EAD8DC;--rosa:#C6A0AA;--ciruela:#43202F;--tenue:#6B4A58;--serif:'Noto Serif Display',Georgia,serif}
+*{box-sizing:border-box}
+html{background:#EDE4E1}
+body{margin:0;color:var(--ciruela);font:400 14px/1.35 'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.barra{max-width:528px;margin:0 auto;padding:16px;display:grid;gap:10px}
+.barra p{margin:0;font-size:13px;line-height:1.4;color:var(--tenue)}
+.acciones{display:flex;gap:8px}
+button{font:inherit;cursor:pointer}
+.btn{flex:1;border:1px solid var(--ciruela);background:var(--ciruela);color:var(--leche);padding:10px 8px;font-size:14px}
+.btn.sec{background:transparent;color:var(--ciruela)}
+.hoja{position:relative;overflow:hidden;width:528px;max-width:100%;min-height:816px;margin:0 auto 32px;padding:48px 40px 30px;background:var(--leche);display:flex;flex-direction:column}
+.fondo{position:absolute;right:-60px;bottom:-30px;width:360px;height:auto;fill:var(--blush);opacity:.4;pointer-events:none}
+.hoja>*:not(.fondo){position:relative}
+.logo svg{display:block;width:216px;height:auto;margin:0 auto}
+h1{margin:18px 0 0;font:300 italic 24px/1.2 var(--serif);text-align:center}
+.ident{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px}
+.campo{display:block;min-width:0}
+.campo>span,.cab span{display:block;font-size:12px;color:var(--tenue);margin-bottom:1px}
+input,textarea{display:block;width:100%;border:0;border-bottom:1px solid var(--rosa);border-radius:0;background:transparent;color:inherit;font:inherit;font-size:15px;line-height:1.3;padding:4px 0;outline:0;resize:none;overflow:hidden}
+input:focus,textarea:focus{border-bottom-color:var(--ciruela);box-shadow:0 1px 0 var(--ciruela)}
+.cliente,.ident.dos{margin-top:16px}
+.productos{margin-top:34px}
+.cab,.fila{display:grid;grid-template-columns:1fr 124px 24px;gap:12px;align-items:end}
+.cab .der,.val input{text-align:right}
+.fila{margin-top:6px}
+.quitar{border:0;background:none;color:var(--tenue);font-size:20px;line-height:1;padding:4px 0;width:24px}
+#agregar{margin-top:10px;border:0;background:none;padding:6px 0;color:var(--ciruela);text-decoration:underline;text-underline-offset:3px}
+.total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:30px;padding-top:12px;border-top:1px solid var(--ciruela)}
+.total span{font:300 italic 24px/1 var(--serif)}
+.total strong{font:300 34px/1 var(--serif);white-space:nowrap}
+.pie{margin-top:auto;padding-top:34px;text-align:center}
+.pie .lema{margin:0;font:300 italic 20px/1.2 var(--serif)}
+.pie .aviso{margin:6px 0 0;font-size:11.5px;color:var(--tenue)}
+@media screen and (max-width:560px){
+ .hoja{padding:32px 16px 26px;min-height:640px;margin-bottom:16px}
+ .btn{padding:12px 6px}
+ input,textarea{font-size:16px}
+ .cab,.fila{grid-template-columns:1fr 104px 24px;gap:8px}
+}
+@page{size:5.5in 8.5in;margin:0}
+@media print{
+ html{background:none}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .barra,.quitar,#agregar{display:none!important}
+ .hoja{width:100%;margin:0;min-height:8.47in}
+ .cab,.fila{grid-template-columns:1fr 124px}
+ .cab .x{display:none}
+ .fila.vacia{display:none}
+ html[data-blanco] .fila.vacia{display:grid}
+}
+</style>
+</head>
+<body>
+<div class="barra">
+ <p id="ayuda">Llena los campos y toca «Guardar PDF». Lo que escribes no se envía a ningún lado; solo el número queda guardado en este equipo. En iPhone, en la ventana de imprimir toca el botón de compartir para guardarlo o mandarlo. En Android, elige «Guardar como PDF».</p>
+ <div class="acciones">
+  <button class="btn sec" id="nuevo" type="button">Nuevo comprobante</button>
+  <button class="btn" id="pdf" type="button">Guardar PDF</button>
+ </div>
+</div>
+<main class="hoja">
+ <svg class="fondo" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="38 0 862 1014" ><path d="M269 714L38 714L38 704L77 704Q104 704 122.5 696Q141 688 150 672Q159 656 159 632L159 632L159 78Q159 55 150 40Q141 25 122.5 17.5Q104 10 77 10L77 10L38 10L38 0L241 0L487.4 581.8L701 0L900 0L900 10L887 10Q860 10 841.5 18Q823 26 814 42Q805 58 805 82L805 82L805 632Q805 656 814 672Q823 688 841.5 696Q860 704 887 704L887 704L900 704L900 714L634 714L634 704L637 704Q659 704 675 696Q691 688 700 672Q709 656 709 632L709 632L709 52L466 714L442 714L177 84L177 632Q177 656 185 672Q192 688 208 696Q224 704 251 704L251 704L269 704L269 714ZM391.5 594L501.5 614C553.8 738.4 640 1015 860 1011L860 1014C620 1018 507.9 870.7 442 714Z"/></svg>
+ <div class="logo" role="img" aria-label="MIRISOTTE"><svg xmlns="http://www.w3.org/2000/svg" viewBox="38 0 5803 946" fill="#43202F" ><path d="M269 714L38 714L38 704L77 704Q104 704 122.5 696Q141 688 150 672Q159 656 159 632L159 632L159 78Q159 55 150 40Q141 25 122.5 17.5Q104 10 77 10L77 10L38 10L38 0L241 0L487.4 581.8L701 0L900 0L900 10L887 10Q860 10 841.5 18Q823 26 814 42Q805 58 805 82L805 82L805 632Q805 656 814 672Q823 688 841.5 696Q860 704 887 704L887 704L900 704L900 714L634 714L634 704L637 704Q659 704 675 696Q691 688 700 672Q709 656 709 632L709 632L709 52L466 714L442 714L177 84L177 632Q177 656 185 672Q192 688 208 696Q224 704 251 704L251 704L269 704L269 714ZM391.5 594L501.5 614C544.2 715.4 627 946.4 812 943.4L812 946C607 949 494.3 838.4 442 714ZM1335 714L1044 714L1044 704L1057 704Q1084 704 1102.5 696Q1121 688 1130 672Q1139 656 1139 632L1139 632L1139 78Q1139 55 1130 40Q1121 25 1102.5 17.5Q1084 10 1057 10L1057 10L1044 10L1044 0L1335 0L1335 10L1322 10Q1295 10 1276.5 18Q1258 26 1249 42Q1240 58 1240 82L1240 82L1240 632Q1240 656 1249 672Q1258 688 1276.5 696Q1295 704 1322 704L1322 704L1335 704L1335 714ZM1760 714L1469 714L1469 704L1482 704Q1509 704 1527.5 696Q1546 688 1555 672Q1564 656 1564 632L1564 632L1564 78Q1564 55 1555 40Q1546 25 1527.5 17.5Q1509 10 1482 10L1482 10L1469 10L1469 0L1738 0Q1825 0 1882 21.5Q1939 43 1967 85Q1995 127 1995 187L1995 187Q1995 245 1971.5 282.5Q1948 320 1911.5 341Q1875 362 1836 373L1836 373L1977 593Q1998 625 2013.5 646.5Q2029 668 2042 680.5Q2055 693 2066.5 698.5Q2078 704 2090 704L2090 704L2093 704L2093 714L2079 714Q2032 714 2001.5 710.5Q1971 707 1951 698Q1931 689 1915.5 671.5Q1900 654 1882 626L1882 626L1728 381L1665 381L1665 632Q1665 656 1674 672Q1683 688 1701.5 696Q1720 704 1747 704L1747 704L1760 704L1760 714ZM1665 371L1735 371Q1791 371 1824.5 353.5Q1858 336 1873 297Q1888 258 1888 194L1888 194Q1888 128 1872.5 87.5Q1857 47 1823 28.5Q1789 10 1733 10L1733 10L1665 10L1665 371ZM2466 714L2175 714L2175 704L2188 704Q2215 704 2233.5 696Q2252 688 2261 672Q2270 656 2270 632L2270 632L2270 78Q2270 55 2261 40Q2252 25 2233.5 17.5Q2215 10 2188 10L2188 10L2175 10L2175 0L2466 0L2466 10L2453 10Q2426 10 2407.5 18Q2389 26 2380 42Q2371 58 2371 82L2371 82L2371 632Q2371 656 2380 672Q2389 688 2407.5 696Q2426 704 2453 704L2453 704L2466 704L2466 714ZM2816 724L2816 724Q2767 724 2728 713.5Q2689 703 2661.5 684.5Q2634 666 2620 641Q2606 616 2606 586L2606 586Q2606 563 2614.5 547.5Q2623 532 2639 524Q2655 516 2678 516L2678 516Q2679 581 2694.5 625.5Q2710 670 2742 692Q2774 714 2823 714L2823 714Q2887 714 2926.5 676.5Q2966 639 2966 566L2966 566Q2966 521 2949.5 493Q2933 465 2896.5 442.5Q2860 420 2801 393L2801 393Q2770 378 2737.5 360.5Q2705 343 2677.5 318.5Q2650 294 2633.5 258.5Q2617 223 2617 174L2617 174Q2617 114 2643 73Q2669 32 2716.5 11Q2764 -10 2828 -10L2828 -10Q2887 -10 2930.5 6Q2974 22 2998.5 48Q3023 74 3023 105L3023 105Q3023 134 3001 150.5Q2979 167 2944 167L2944 167Q2944 84 2917 42Q2890 0 2827 0L2827 0Q2789 0 2760 15.5Q2731 31 2715.5 61.5Q2700 92 2700 138L2700 138Q2700 187 2718 217Q2736 247 2772.5 268.5Q2809 290 2864 316L2864 316Q2914 339 2956.5 364Q2999 389 3025 427Q3051 465 3051 527L3051 527Q3051 588 3023.5 632Q2996 676 2943.5 700Q2891 724 2816 724ZM3523 724L3523 724Q3417 724 3347 678Q3277 632 3242.5 549Q3208 466 3208 355L3208 355Q3208 244 3242.5 162Q3277 80 3347.5 34.5Q3418 -11 3524 -11L3524 -11Q3625 -11 3694.5 34.5Q3764 80 3800.5 162.5Q3837 245 3837 356L3837 356Q3837 467 3800.5 549.5Q3764 632 3694 678Q3624 724 3523 724ZM3523 714L3523 714Q3576 714 3614.5 693.5Q3653 673 3677.5 629.5Q3702 586 3714 518Q3726 450 3726 356L3726 356Q3726 262 3714 194.5Q3702 127 3677.5 83.5Q3653 40 3615 19.5Q3577 -1 3524 -1L3524 -1Q3470 -1 3431.5 19.5Q3393 40 3368 83.5Q3343 127 3331 194.5Q3319 262 3319 356L3319 356Q3319 450 3331 518Q3343 586 3367.5 629.5Q3392 673 3430.5 693.5Q3469 714 3523 714ZM4379 714L4088 714L4088 704L4101 704Q4128 704 4146.5 696Q4165 688 4174 672Q4183 656 4183 632L4183 632L4183 10L4101 10Q4051 10 4021 22Q3991 34 3977 63Q3963 92 3960 142L3960 142L3958 175L3948 175L3954 0L4515 0L4521 175L4511 175L4509 142Q4506 92 4492 63Q4478 34 4448.5 22Q4419 10 4368 10L4368 10L4284 10L4284 632Q4284 656 4293 672Q4302 688 4320.5 696Q4339 704 4366 704L4366 704L4379 704L4379 714ZM5054 714L4763 714L4763 704L4776 704Q4803 704 4821.5 696Q4840 688 4849 672Q4858 656 4858 632L4858 632L4858 10L4776 10Q4726 10 4696 22Q4666 34 4652 63Q4638 92 4635 142L4635 142L4633 175L4623 175L4629 0L5190 0L5196 175L5186 175L5184 142Q5181 92 5167 63Q5153 34 5123.5 22Q5094 10 5043 10L5043 10L4959 10L4959 632Q4959 656 4968 672Q4977 688 4995.5 696Q5014 704 5041 704L5041 704L5054 704L5054 714ZM5834 714L5298 714L5298 704L5311 704Q5338 704 5356.5 696Q5375 688 5384 672Q5393 656 5393 632L5393 632L5393 78Q5393 55 5384 40Q5375 25 5356.5 17.5Q5338 10 5311 10L5311 10L5298 10L5298 0L5801 0L5807 175L5797 175L5795 142Q5792 92 5778 63Q5764 34 5734.5 22Q5705 10 5654 10L5654 10L5494 10L5494 335L5745 335L5745 345L5494 345L5494 704L5679 704Q5733 704 5765 692Q5797 680 5811.5 651Q5826 622 5829 572L5829 572L5831 539L5841 539L5834 714Z"/></svg></div>
+ <h1>Comprobante de venta</h1>
+ <div class="ident">
+  <label class="campo"><span>Número</span><input id="numero" autocomplete="off"></label>
+  <label class="campo"><span>Fecha</span><input id="fecha" autocomplete="off"></label>
+ </div>
+ <label class="campo cliente"><span>Cliente</span><input id="cliente" data-cliente autocomplete="off"></label>
+ <div class="ident dos">
+  <label class="campo"><span>C.C.</span><input data-cliente inputmode="numeric" autocomplete="off"></label>
+  <label class="campo"><span>Celular</span><input data-cliente inputmode="tel" autocomplete="off"></label>
+ </div>
+ <section class="productos">
+  <div class="cab"><span>Producto</span><span class="der">Valor</span><span class="x"></span></div>
+  <div id="filas"></div>
+  <button id="agregar" type="button">Agregar producto</button>
+ </section>
+ <div class="total"><span>Total</span><strong id="total"></strong></div>
+ <footer class="pie">
+  <p class="lema">El gusto de ser tú.</p>
+  <p class="aviso">Este comprobante no reemplaza la factura electrónica de venta.</p>
+ </footer>
+</main>
+<script>
+(function(){
+ var blanco=document.documentElement.hasAttribute('data-blanco');
+ var CLAVE='mirisotte.comprobante.corto';
+ var $=function(s,r){return (r||document).querySelector(s)};
+ var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+ var num=function(v){return parseInt(String(v).replace(/\D/g,''),10)||0};
+ var miles=function(n){return n.toLocaleString('es-CO')};
+ var filas=$('#filas'),numero=$('#numero'),fecha=$('#fecha');
+ function alto(t){t.style.height='auto';t.style.height=t.scrollHeight+'px'}
+ function hoy(){var d=new Date(),p=function(x){return (x<10?'0':'')+x};return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+d.getFullYear()}
+ function aviso(){$('#ayuda').textContent='Llena los campos y toca «Guardar PDF». Este navegador no deja recordar el número: revísalo antes de guardar.'}
+ function leer(){try{return localStorage.getItem(CLAVE)}catch(e){aviso();return null}}
+ function guardar(){try{localStorage.setItem(CLAVE,numero.value)}catch(e){aviso()}}
+ function agregar(){
+  var f=document.createElement('div');f.className='fila vacia';
+  f.innerHTML='<textarea rows="1" aria-label="Producto"></textarea><div class="val"><input inputmode="numeric" aria-label="Valor" autocomplete="off"></div><button class="quitar" type="button" aria-label="Quitar producto">×</button>';
+  filas.appendChild(f);
+  var t=$('textarea',f),v=$('input',f);
+  t.addEventListener('input',function(){alto(t);calcular()});
+  v.addEventListener('input',calcular);
+  v.addEventListener('blur',function(){var n=num(v.value);v.value=n?miles(n):''});
+  $('.quitar',f).addEventListener('click',function(){f.remove();if(!filas.children.length)agregar();calcular()});
+  return f;
+ }
+ function calcular(){
+  var suma=0;
+  $$('.fila',filas).forEach(function(f){
+   var t=$('textarea',f).value.trim(),v=$('input',f).value.trim();
+   f.classList.toggle('vacia',!(t||v));suma+=num(v);
+  });
+  $('#total').textContent=blanco?'':'$ '+miles(suma);
+ }
+ function reiniciar(){$$('[data-cliente]').forEach(function(c){c.value=''});filas.innerHTML='';for(var i=0;i<(blanco?6:1);i++)agregar();fecha.value=blanco?'':hoy();calcular()}
+ numero.addEventListener('input',guardar);
+ $('#agregar').addEventListener('click',function(){$('textarea',agregar()).focus()});
+ $('#nuevo').addEventListener('click',function(){
+  var lleno=$$('[data-cliente]').some(function(c){return c.value.trim()})||$$('.fila:not(.vacia)',filas).length;
+  if(lleno&&!confirm('Se borran los datos de este cliente. ¿Ya guardaste el PDF?'))return;
+  var largo=Math.max(numero.value.replace(/\D/g,'').length,4);
+  numero.value=String(num(numero.value)+1).padStart(largo,'0');
+  reiniciar();guardar();
+ });
+ $('#pdf').addEventListener('click',function(){document.title='Comprobante '+numero.value+' - MIRISOTTE';window.print()});
+ numero.value=blanco?'':(leer()||'0001');
+ reiniciar();
+})();
+</script>
+</body>
+</html>
